@@ -19,7 +19,10 @@ Abrir o navegador
 
 
 Ir para o site Serve Rest Front
-    New Page           url=${URL}     
+    New Page           url=${URL} 
+
+    ${title}   Get Title    ==     Front - ServeRest
+    Log        ${title}    
 
 
 Preencher os daddos do novo usuário e cadastrar
@@ -31,5 +34,12 @@ Preencher os daddos do novo usuário e cadastrar
     Fill Text         css=input[data-testid='email']        ${email}
     Fill Text         css=input[data-testid='password']     Abc@123
     Check Checkbox    css=input[data-testid='checkbox']     
-    Click             css=button[data-testid='cadastrar']     
+    Click             xpath=//*[@id="root"]//button >> text="Cadastrar"
     Sleep    3s
+
+Conferir usuário cadastrado com sucesso
+    [Arguments]    ${nome}
+    Wait For Elements State    h1     visible
+    Get Text                   h1   ==    Bem Vindo ${nome}	
+    Get Element States         css=button[data-testid='logout']    
+    ...                        validate    value & visible

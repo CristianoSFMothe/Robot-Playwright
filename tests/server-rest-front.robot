@@ -8,5 +8,6 @@ Login com sucesso Serve Rest Front
     Abrir o navegador
     Ir para o site Serve Rest Front
     Preencher os daddos do novo usuário e cadastrar
+    Conferir usuário cadastrado com sucesso    Cristiano Ferreira Mothe
     
 
