@@ -3,19 +3,27 @@ Documentation        Cenários de testes
 
 Library              Browser
 Library              FakerLibrary
+Library              DateTime
 
 *** Variables ***
 ${URL}                https://front.serverest.dev/login
 ${BROWSER}            chromium
-${HEADLESS}           ${False}
+${HEADLESS}           ${True}
 
 
 *** Keywords ***
 Abrir o navegador
     New Browser        browser=${BROWSER}
-    ...                headless=${HEADLESS}
+    ...                headless=${HEADLESS} 
     
-    New Context        viewport={'width': 1200, 'height': 800}  
+    &{recordVideo}     Create Dictionary     dir=./videos
+       
+    ${TRACE_NAME}  FakerLibrary.Uuid 4
+
+    ${NOW}         Get Current Date  result_format=%d-%m-%Y_%H%M%S
+    New Context    viewport={'width': 1200, 'height': 800}
+    ...            tracing=${OUTPUT_DIR}/evidencies/traces/${NOW}/${TRACE_NAME}.zip
+    ...            recordVideo=${recordVideo}
 
 
 Ir para o site Serve Rest Front
