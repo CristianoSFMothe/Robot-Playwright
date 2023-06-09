@@ -6,7 +6,6 @@ Library              Browser
 # ...                  enable_presenter_mode=${true}
 Library              FakerLibrary
 Library              DateTime
-Library    RequestsLibrary
 
 *** Variables ***
 ${URL}                https://front.serverest.dev/login
