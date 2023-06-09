@@ -4,6 +4,7 @@ Documentation        Arquivo de testes para consumir as resources
 Resource            ../resoures/server-rest-front.resource
 
 Suite Setup        Cadastrar Usuário e Logar
+Suite Teardown     Close Browser    ALL
 
 
 *** Test Cases ***
