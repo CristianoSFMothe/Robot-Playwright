@@ -62,12 +62,12 @@ Conferir usuário cadastrado com sucesso
     
     
 Criar usuário via API
-    ${EMAIL}  FakerLibrary.Email
-    Set Suite Variable    ${EMAIL}
+    ${email}  FakerLibrary.Email
+    Set Suite Variable    ${email}
 
     ${resposta}  Http    url=https://serverest.dev/usuarios
     ...                  method=POST
-    ...                  body={"nome": "Cristiano Mothe","email": "${EMAIL}","password": "123456","administrador": "true"}   
+    ...                  body={"nome": "Cristiano Mothe","email": "${email}","password": "123456","administrador": "true"}   
 
     Should Be Equal As Integers    ${resposta["status"]}    201
 
@@ -85,5 +85,33 @@ Logar com o usuário cadastrado via API
     Go To    url=https://front.serverest.dev/admin/home
 
     Take Screenshot
+
+Cadastrar Usuário e Logar
+    New Browser
+    New Page    url=${URL}
+    Criar usuário via API
+    Logar com o usuário cadastrado via API
+
+    ${storage_file}    Save Storage State
+
+    Set Suite Variable    ${storage_file}
+
+Abrir o Site Serve Rest Front Logado
+    [Arguments]    ${nome}
+
+    New Browser        browser=${BROWSER}
+    ...                headless=${HEADLESS}
+
+    New Context    viewport={'width': 1200, 'height': 800} 
+    ...            storageState=${storage_file}  
+    
+    New Page       url=https://front.serverest.dev/admin/home
+
+    Get Text                   h1   ==    Bem Vindo ${nome}
+
+    Take Screenshot
+
+Acessar a Lista de usuários
+    Click    css=a[data-testid='listarUsuarios'] 
 
 

@@ -3,6 +3,9 @@ Documentation        Arquivo de testes para consumir as resources
 
 Resource            ../resoures/server-rest-front.resource
 
+Suite Setup        Cadastrar Usuário e Logar
+
+
 *** Test Cases ***
 Login com sucesso Serve Rest Front
     Abrir o navegador
@@ -18,6 +21,14 @@ Login HTTP com requisição via API
     Ir para o site Serve Rest Front    
     Criar usuário via API  
     Logar com o usuário cadastrado via API
+
+
+Utilizando o Storage Armazenado no Contexto
+    [Tags]    storage
+
+    Abrir o Site Serve Rest Front Logado    Cristiano Mothe
+    Acessar a Lista de usuários
+
 
 
 
