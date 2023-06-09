@@ -123,3 +123,14 @@ Acessar a Lista de usuários
     Click    css=a[data-testid='listarUsuarios'] 
 
 
+Cadastrar um novo produto
+  Click              css=a[data-testid='cadastrarProdutos']
+  ${nome_produto}    FakerLibrary.Word
+  Set Test Variable  ${nome_produto}
+  Fill Text          css=input[data-testid='nome']          ${nome_produto}
+  Fill Text          css=input[data-testid='preco']         10
+  Fill Text          css=textarea[data-testid='descricao']  Produto Teste Robot Framework
+  Fill Text          css=input[data-testid='quantity']      5
+  Click              text="Cadastrar"
+
+

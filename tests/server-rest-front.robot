@@ -8,7 +8,7 @@ Suite Setup        Cadastrar Usuário e Logar
 
 *** Test Cases ***
 Login com sucesso Serve Rest Front
-    [Tags]    teste
+    [Tags]    login
     
     Abrir o navegador
     Ir para o site Serve Rest Front    
@@ -16,6 +16,8 @@ Login com sucesso Serve Rest Front
     Conferir usuário cadastrado com sucesso    Cristiano Mothe
 
 Login com sucesso Serve Rest Front
+    [Tags]    login_api
+
     Abrir o Site Serve Rest Front Logado          Cristiano Mothe
     Acessar a Lista de usuários
     Conferir que o usuário aparece na listagem    Cristiano Mothe
@@ -35,6 +37,15 @@ Utilizando o Storage Armazenado no Contexto
 
     Abrir o Site Serve Rest Front Logado    Cristiano Mothe
     Acessar a Lista de usuários
+
+
+Cadastro e Consulta de Produtos
+    [Tags]    products
+    
+    Abrir o Site Serve Rest Front Logado            Cristiano Mothe
+    Cadastrar um novo produto
+    
+
 
 
 
