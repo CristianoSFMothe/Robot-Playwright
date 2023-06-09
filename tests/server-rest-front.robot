@@ -8,10 +8,17 @@ Suite Setup        Cadastrar Usuário e Logar
 
 *** Test Cases ***
 Login com sucesso Serve Rest Front
+    [Tags]    teste
+    
     Abrir o navegador
     Ir para o site Serve Rest Front    
     Preencher os daddos do novo usuário e cadastrar
-    Conferir usuário cadastrado com sucesso    Cristiano Ferreira Mothe
+    Conferir usuário cadastrado com sucesso    Cristiano Mothe
+
+Login com sucesso Serve Rest Front
+    Abrir o Site Serve Rest Front Logado          Cristiano Mothe
+    Acessar a Lista de usuários
+    Conferir que o usuário aparece na listagem    Cristiano Mothe
 
 
 Login HTTP com requisição via API

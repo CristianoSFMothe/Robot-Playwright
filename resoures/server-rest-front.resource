@@ -46,7 +46,7 @@ Preencher os daddos do novo usuário e cadastrar
 
     ${email}     FakerLibrary.Email 
 
-    Fill Text         css=input[data-testid='nome']         Cristiano Ferreira Mothe
+    Fill Text         css=input[data-testid='nome']         Cristiano Mothe
     Fill Text         css=input[data-testid='email']        ${email}
     Fill Text         css=input[data-testid='password']     Abc@123
     Check Checkbox    css=input[data-testid='checkbox']     
@@ -59,7 +59,15 @@ Conferir usuário cadastrado com sucesso
     Get Text                   h1   ==    Bem Vindo ${nome}	
     Get Element States         css=button[data-testid='logout']    
     ...                        validate    value & visible
-    
+
+Conferir que o usuário aparece na listagem
+    [Arguments]    ${nome}
+
+    ${elemento}      Get Table Cell Element    css=table    "Nome"    "${EMAIL}"
+    ${usuario_nome}  Get Text  ${elemento}  ==  ${nome}
+    Highlight Elements    ${elemento}
+    Take Screenshot       fullPage=${true}
+
     
 Criar usuário via API
     ${email}  FakerLibrary.Email
