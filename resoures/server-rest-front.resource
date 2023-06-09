@@ -2,13 +2,20 @@
 Documentation        Cenários de testes 
 
 Library              Browser
+# ...                  timeout=00:00:05
+# ...                  enable_presenter_mode=${true}
 Library              FakerLibrary
 Library              DateTime
+Library    RequestsLibrary
 
 *** Variables ***
 ${URL}                https://front.serverest.dev/login
 ${BROWSER}            chromium
-${HEADLESS}           ${True}
+${HEADLESS}           ${False}
+&{PAYLOAD}            nome=Fulano da Silva
+...                   email=beltrano@qa.com.br
+...                   password=teste
+...                   administrador=true
 
 
 *** Keywords ***
@@ -16,18 +23,19 @@ Abrir o navegador
     New Browser        browser=${BROWSER}
     ...                headless=${HEADLESS} 
     
-    &{recordVideo}     Create Dictionary     dir=./videos
+    # &{recordVideo}     Create Dictionary     dir=./videos
        
     ${TRACE_NAME}  FakerLibrary.Uuid 4
 
-    ${NOW}         Get Current Date  result_format=%d-%m-%Y_%H%M%S
+    # ${NOW}         Get Current Date  result_format=%d-%m-%Y_%H%M%S
     New Context    viewport={'width': 1200, 'height': 800}
-    ...            tracing=${OUTPUT_DIR}/evidencies/traces/${NOW}/${TRACE_NAME}.zip
-    ...            recordVideo=${recordVideo}
+    # ...            tracing=${OUTPUT_DIR}/evidencies/traces/${NOW}/${TRACE_NAME}.zip
+    # ...            recordVideo=${recordVideo}
 
 
 Ir para o site Serve Rest Front
-    New Page           url=${URL} 
+
+    New Page           url=${URL}
 
     ${title}   Get Title    ==     Front - ServeRest
     Log        ${title}    
@@ -42,12 +50,40 @@ Preencher os daddos do novo usuário e cadastrar
     Fill Text         css=input[data-testid='email']        ${email}
     Fill Text         css=input[data-testid='password']     Abc@123
     Check Checkbox    css=input[data-testid='checkbox']     
-    Click             xpath=//*[@id="root"]//button >> text="Cadastrar"
-    Sleep    3s
+    Click             xpath=//*[@id="root"]//button >> text="Cadastrar"     
 
 Conferir usuário cadastrado com sucesso
     [Arguments]    ${nome}
+
     Wait For Elements State    h1     visible
     Get Text                   h1   ==    Bem Vindo ${nome}	
     Get Element States         css=button[data-testid='logout']    
     ...                        validate    value & visible
+    
+    
+Criar usuário via API
+    ${EMAIL}  FakerLibrary.Email
+    Set Suite Variable    ${EMAIL}
+
+    ${resposta}  Http    url=https://serverest.dev/usuarios
+    ...                  method=POST
+    ...                  body={"nome": "Cristiano Mothe","email": "${EMAIL}","password": "123456","administrador": "true"}   
+
+    Should Be Equal As Integers    ${resposta["status"]}    201
+
+Logar com o usuário cadastrado via API
+    ${resposta}  Http    url=https://serverest.dev/login
+    ...                  method=POST
+    ...                  body={"email": "${EMAIL}","password": "123456"}
+    
+    Should Be Equal As Integers    ${resposta["status"]}    200
+
+    LocalStorage Set Item    serverest/userEmail    ${EMAIL}
+    LocalStorage Set Item    serverest/userToken    ${resposta["body"]["authorization"]}
+    LocalStorage Set Item    serverest/userNome     Cristiano Mothe
+
+    Go To    url=https://front.serverest.dev/admin/home
+
+    Take Screenshot
+
+
