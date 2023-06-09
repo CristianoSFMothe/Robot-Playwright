@@ -30,4 +30,14 @@ jobs:
       - name: Run Robot Framework Web Tests
         run: |
           robot -d ./logs -v HEADLESS:true -v BROWSER:chromium tests
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs-chromium
+          path: ./logs
+          if-no-files-found: ignore
+          retention-days: 2
+          
           
