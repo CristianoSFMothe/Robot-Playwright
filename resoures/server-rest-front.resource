@@ -134,3 +134,10 @@ Cadastrar um novo produto
   Click              text="Cadastrar"
 
 
+Conferir que o produto aparece na listagem
+  ${elemento}   Get Table Cell Element    css=table    "Descrição"    "${nome_produto}"
+  ${descricao}  Get Text  ${elemento}  ==  Produto Teste Robot Framework
+  Highlight Elements    ${elemento}
+  Take Screenshot       fullPage=${true}
+
+

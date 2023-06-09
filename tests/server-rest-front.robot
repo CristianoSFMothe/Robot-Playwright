@@ -41,9 +41,10 @@ Utilizando o Storage Armazenado no Contexto
 
 Cadastro e Consulta de Produtos
     [Tags]    products
-    
+
     Abrir o Site Serve Rest Front Logado            Cristiano Mothe
     Cadastrar um novo produto
+    Conferir que o produto aparece na listagem
     
 
 
